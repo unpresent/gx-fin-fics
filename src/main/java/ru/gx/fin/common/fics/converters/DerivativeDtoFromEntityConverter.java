@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 import ru.gx.core.data.NotAllowedObjectUpdateException;
 import ru.gx.core.data.edlinking.AbstractDtoFromEntityConverter;
 import ru.gx.fin.common.fics.entities.DerivativeEntity;
-import ru.gx.fin.core.fics.out.Derivative;
+import ru.gx.fin.common.fics.out.Derivative;
 
 public class DerivativeDtoFromEntityConverter extends AbstractDtoFromEntityConverter<Derivative, DerivativeEntity> {
     @Override

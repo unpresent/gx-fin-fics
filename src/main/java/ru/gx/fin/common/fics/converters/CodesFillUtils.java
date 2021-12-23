@@ -4,8 +4,8 @@ import org.jetbrains.annotations.NotNull;
 import ru.gx.fin.common.fics.entities.AbstractInstrumentEntity;
 import ru.gx.fin.common.fics.entities.InstrumentCodeEntity;
 import ru.gx.fin.common.fics.repository.ProvidersRepository;
-import ru.gx.fin.core.fics.out.AbstractInstrument;
-import ru.gx.fin.core.fics.out.InstrumentCode;
+import ru.gx.fin.common.fics.out.AbstractInstrument;
+import ru.gx.fin.common.fics.out.InstrumentCode;
 
 public abstract class CodesFillUtils {
 

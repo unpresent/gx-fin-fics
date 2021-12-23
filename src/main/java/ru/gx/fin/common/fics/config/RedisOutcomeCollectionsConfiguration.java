@@ -10,9 +10,9 @@ import ru.gx.fin.common.dris.channels.DrisSnapshotInstrumentTypeDataPublishChann
 import ru.gx.fin.common.dris.channels.DrisSnapshotPlaceDataPublishChannelApiV1;
 import ru.gx.fin.common.dris.channels.DrisSnapshotProviderDataPublishChannelApiV1;
 import ru.gx.fin.common.dris.channels.DrisSnapshotProviderTypeDataPublishChannelApiV1;
-import ru.gx.fin.core.fics.channels.FicsSnapshotCurrencyDataPublishChannelApiV1;
-import ru.gx.fin.core.fics.channels.FicsSnapshotDerivativeDataPublishChannelApiV1;
-import ru.gx.fin.core.fics.channels.FicsSnapshotSecurityDataPublishChannelApiV1;
+import ru.gx.fin.common.fics.channels.FicsSnapshotCurrencyDataPublishChannelApiV1;
+import ru.gx.fin.common.fics.channels.FicsSnapshotDerivativeDataPublishChannelApiV1;
+import ru.gx.fin.common.fics.channels.FicsSnapshotSecurityDataPublishChannelApiV1;
 
 import javax.annotation.PostConstruct;
 
@@ -42,17 +42,12 @@ public class RedisOutcomeCollectionsConfiguration extends AbstractRedisOutcomeCo
 
         this
                 .newDescriptor(this.currencyChannelApiV1, RedisOutcomeCollectionUploadingDescriptor.class)
-                .setPriority(0)
                 .init();
-
         this
                 .newDescriptor(this.securityChannelApiV1, RedisOutcomeCollectionUploadingDescriptor.class)
-                .setPriority(1)
                 .init();
-
         this
                 .newDescriptor(this.derivativeChannelApiV1, RedisOutcomeCollectionUploadingDescriptor.class)
-                .setPriority(2)
                 .init();
     }
 }

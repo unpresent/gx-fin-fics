@@ -12,9 +12,9 @@ import ru.gx.core.data.edlinking.AbstractEntityFromDtoConverter;
 import ru.gx.fin.common.fics.entities.AbstractInstrumentEntity;
 import ru.gx.fin.common.fics.entities.DerivativeEntity;
 import ru.gx.fin.common.fics.repository.*;
-import ru.gx.fin.core.fics.out.Currency;
-import ru.gx.fin.core.fics.out.Derivative;
-import ru.gx.fin.core.fics.out.Security;
+import ru.gx.fin.common.fics.out.Currency;
+import ru.gx.fin.common.fics.out.Derivative;
+import ru.gx.fin.common.fics.out.Security;
 
 import java.util.UUID;
 

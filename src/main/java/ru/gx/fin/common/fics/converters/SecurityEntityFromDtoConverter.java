@@ -11,7 +11,7 @@ import ru.gx.fin.common.fics.entities.SecurityEntity;
 import ru.gx.fin.common.fics.repository.InstrumentTypesRepository;
 import ru.gx.fin.common.fics.repository.ProvidersRepository;
 import ru.gx.fin.common.fics.repository.SecuritiesRepository;
-import ru.gx.fin.core.fics.out.Security;
+import ru.gx.fin.common.fics.out.Security;
 
 import static lombok.AccessLevel.PROTECTED;
 

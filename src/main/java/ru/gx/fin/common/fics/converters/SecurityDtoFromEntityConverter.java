@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 import ru.gx.core.data.NotAllowedObjectUpdateException;
 import ru.gx.core.data.edlinking.AbstractDtoFromEntityConverter;
 import ru.gx.fin.common.fics.entities.SecurityEntity;
-import ru.gx.fin.core.fics.out.Security;
+import ru.gx.fin.common.fics.out.Security;
 
 public class SecurityDtoFromEntityConverter extends AbstractDtoFromEntityConverter<Security, SecurityEntity> {
 

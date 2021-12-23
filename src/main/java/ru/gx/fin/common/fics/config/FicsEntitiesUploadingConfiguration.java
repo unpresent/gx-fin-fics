@@ -14,13 +14,13 @@ import ru.gx.fin.common.fics.entities.SecurityEntity;
 import ru.gx.fin.common.fics.repository.CurrenciesRepository;
 import ru.gx.fin.common.fics.repository.DerivativesRepository;
 import ru.gx.fin.common.fics.repository.SecuritiesRepository;
-import ru.gx.fin.core.fics.channels.FicsSnapshotCurrencyDataPublishChannelApiV1;
-import ru.gx.fin.core.fics.channels.FicsSnapshotDerivativeDataPublishChannelApiV1;
-import ru.gx.fin.core.fics.channels.FicsSnapshotSecurityDataPublishChannelApiV1;
-import ru.gx.fin.core.fics.keyextractors.CurrencyKeyExtractor;
-import ru.gx.fin.core.fics.keyextractors.DerivativeKeyExtractor;
-import ru.gx.fin.core.fics.keyextractors.SecurityKeyExtractor;
-import ru.gx.fin.core.fics.out.*;
+import ru.gx.fin.common.fics.channels.FicsSnapshotCurrencyDataPublishChannelApiV1;
+import ru.gx.fin.common.fics.channels.FicsSnapshotDerivativeDataPublishChannelApiV1;
+import ru.gx.fin.common.fics.channels.FicsSnapshotSecurityDataPublishChannelApiV1;
+import ru.gx.fin.common.fics.keyextractors.CurrencyKeyExtractor;
+import ru.gx.fin.common.fics.keyextractors.DerivativeKeyExtractor;
+import ru.gx.fin.common.fics.keyextractors.SecurityKeyExtractor;
+import ru.gx.fin.common.fics.out.*;
 
 import javax.annotation.PostConstruct;
 

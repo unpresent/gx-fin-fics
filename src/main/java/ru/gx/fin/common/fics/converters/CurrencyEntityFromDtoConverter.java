@@ -11,7 +11,7 @@ import ru.gx.fin.common.fics.entities.CurrencyEntity;
 import ru.gx.fin.common.fics.repository.CurrenciesRepository;
 import ru.gx.fin.common.fics.repository.InstrumentTypesRepository;
 import ru.gx.fin.common.fics.repository.ProvidersRepository;
-import ru.gx.fin.core.fics.out.Currency;
+import ru.gx.fin.common.fics.out.Currency;
 
 import static lombok.AccessLevel.PROTECTED;
 

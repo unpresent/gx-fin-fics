@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 import ru.gx.core.data.NotAllowedObjectUpdateException;
 import ru.gx.core.data.edlinking.AbstractDtoFromEntityConverter;
 import ru.gx.fin.common.fics.entities.CurrencyEntity;
-import ru.gx.fin.core.fics.out.Currency;
+import ru.gx.fin.common.fics.out.Currency;
 
 public class CurrencyDtoFromEntityConverter extends AbstractDtoFromEntityConverter<Currency, CurrencyEntity> {
     @Override
