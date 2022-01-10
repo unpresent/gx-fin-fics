@@ -26,10 +26,13 @@ import ru.gx.core.simpleworker.SimpleWorkerOnStartingExecuteEvent;
 import ru.gx.core.simpleworker.SimpleWorkerOnStoppingExecuteEvent;
 import ru.gx.fin.common.fics.config.FicsEntitiesUploadingConfiguration;
 import ru.gx.fin.common.fics.config.RedisOutcomeCollectionsConfiguration;
+import ru.gx.fin.common.fics.out.AbstractInstrument;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static lombok.AccessLevel.PROTECTED;
 
@@ -70,6 +73,14 @@ public class DataController {
     @Getter(PROTECTED)
     @Setter(value = PROTECTED, onMethod_ = @Autowired)
     private RedisOutcomeCollectionsConfiguration redisOutcomeTopicsConfiguration;
+    // </editor-fold>
+    // -----------------------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Initialization">
+
+    public DataController() {
+        super();
+    }
+
     // </editor-fold>
     // -----------------------------------------------------------------------------------------------------------------
     // <editor-fold desc="Обработка событий Worker-а">
