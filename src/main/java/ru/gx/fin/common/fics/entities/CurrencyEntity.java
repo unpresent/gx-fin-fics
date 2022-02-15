@@ -29,36 +29,36 @@ public class CurrencyEntity extends AbstractInstrumentEntity {
     /**
      * Код Alpha-2
      */
-    @Column(name = "CodeAlpha2", length = 2, nullable = true)
+    @Column(name = "CodeAlpha2", length = 2)
     private String codeAlpha2;
 
     /**
      * Код Alpha-3
      */
-    @Column(name = "CodeAlpha3", length = 3, nullable = true)
+    @Column(name = "CodeAlpha3", length = 3)
     private String codeAlpha3;
 
     /**
      * Код Dec
      */
-    @Column(name = "CodeDec", nullable = true)
+    @Column(name = "CodeDec")
     private Short codeDec;
 
     /**
      * Знак
      */
-    @Column(name = "Sign", nullable = true)
+    @Column(name = "Sign")
     private String sign;
 
     /**
      * Название разменной части
      */
-    @Column(name = "PartsName", nullable = true)
+    @Column(name = "PartsName")
     private String partsNames;
 
     /**
      * Сколько разменных единиц в единице валюты (сколько "копеек в рубле")
      */
-    @Column(name = "PartsInOne", nullable = true)
+    @Column(name = "PartsInOne")
     private Integer partsInOne;
 }

@@ -1,6 +1,5 @@
 package ru.gx.fin.common.fics.converters;
 
-import com.fasterxml.jackson.databind.deser.std.UUIDDeserializer;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -11,10 +10,8 @@ import org.springframework.util.StringUtils;
 import ru.gx.core.data.edlinking.AbstractEntityFromDtoConverter;
 import ru.gx.fin.common.fics.entities.AbstractInstrumentEntity;
 import ru.gx.fin.common.fics.entities.DerivativeEntity;
-import ru.gx.fin.common.fics.repository.*;
-import ru.gx.fin.common.fics.out.Currency;
 import ru.gx.fin.common.fics.out.Derivative;
-import ru.gx.fin.common.fics.out.Security;
+import ru.gx.fin.common.fics.repository.*;
 
 import java.util.UUID;
 

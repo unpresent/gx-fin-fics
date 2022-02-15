@@ -26,13 +26,10 @@ import ru.gx.core.simpleworker.SimpleWorkerOnStartingExecuteEvent;
 import ru.gx.core.simpleworker.SimpleWorkerOnStoppingExecuteEvent;
 import ru.gx.fin.common.fics.config.FicsEntitiesUploadingConfiguration;
 import ru.gx.fin.common.fics.config.RedisOutcomeCollectionsConfiguration;
-import ru.gx.fin.common.fics.out.AbstractInstrument;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import static lombok.AccessLevel.PROTECTED;
 

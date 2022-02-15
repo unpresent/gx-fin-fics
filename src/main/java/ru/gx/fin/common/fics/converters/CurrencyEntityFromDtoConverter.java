@@ -8,10 +8,10 @@ import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.gx.core.data.edlinking.AbstractEntityFromDtoConverter;
 import ru.gx.fin.common.fics.entities.CurrencyEntity;
+import ru.gx.fin.common.fics.out.Currency;
 import ru.gx.fin.common.fics.repository.CurrenciesRepository;
 import ru.gx.fin.common.fics.repository.InstrumentTypesRepository;
 import ru.gx.fin.common.fics.repository.ProvidersRepository;
-import ru.gx.fin.common.fics.out.Currency;
 
 import static lombok.AccessLevel.PROTECTED;
 
@@ -31,6 +31,7 @@ public class CurrencyEntityFromDtoConverter extends AbstractEntityFromDtoConvert
     @NotNull
     private ProvidersRepository providersRepository;
 
+    @SuppressWarnings("unused")
     @Nullable
     public static CurrencyEntity getEntityByDto(@NotNull final CurrenciesRepository entitiesRepository, @Nullable final Currency source) {
         if (source == null) {

@@ -26,6 +26,7 @@ public class SettingsDataController {
     @Setter(value = PROTECTED, onMethod_ = @Autowired)
     private StandardSettingsController settings;
 
+    @SuppressWarnings("unused")
     @Operation(description = "Get any setting value")
     @ApiResponses(
             @ApiResponse(

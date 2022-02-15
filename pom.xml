@@ -7,7 +7,7 @@
     <groupId>ru.gx.common</groupId>
     <artifactId>gx-fin-fics</artifactId>
     <packaging>jar</packaging>
-    <version>1.4.2</version>
+    <version>1.4.3</version>
 
     <properties>
         <encoding>UTF-8</encoding>
@@ -15,8 +15,8 @@
         <maven.compiler.target>17</maven.compiler.target>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <spring-boot-maven-plugin.version>2.6.2</spring-boot-maven-plugin.version>
-        <gx-core-dependencies.version>1.4.2</gx-core-dependencies.version>
-        <gx-fin-fics-out-api.version>1.4.2</gx-fin-fics-out-api.version>
+        <gx-core-dependencies.version>1.4.3</gx-core-dependencies.version>
+        <gx-fin-fics-out-api.version>1.4.3</gx-fin-fics-out-api.version>
     </properties>
 
     <dependencyManagement>

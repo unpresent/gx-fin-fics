@@ -25,6 +25,6 @@ public class SecurityEntity extends AbstractInstrumentEntity {
     /**
      * Код ISIN
      */
-    @Column(name = "CodeISIN", length = 20, nullable = true)
+    @Column(name = "CodeISIN", length = 20)
     private String codeIsin;
 }

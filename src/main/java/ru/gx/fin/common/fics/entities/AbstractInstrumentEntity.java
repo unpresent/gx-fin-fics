@@ -17,6 +17,7 @@ import java.util.UUID;
 /**
  * ФИ
  */
+@SuppressWarnings("unused")
 @Entity
 @Table(schema = "Fics", name = "Instruments")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -56,7 +57,7 @@ public abstract class AbstractInstrumentEntity extends AbstractEntityObject {
     @OneToMany(fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinColumn(name = "Instrument_Id")
-    private Collection<InstrumentGuidEntity> guids = new ArrayList<>();
+    private final Collection<InstrumentGuidEntity> guids = new ArrayList<>();
 
     public UUID getPrimaryGuid() {
         for (var g : this.guids) {
@@ -70,5 +71,5 @@ public abstract class AbstractInstrumentEntity extends AbstractEntityObject {
     @OneToMany(fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinColumn(name = "Instrument_Id")
-    private Collection<InstrumentCodeEntity> codes = new ArrayList<>();
+    private final Collection<InstrumentCodeEntity> codes = new ArrayList<>();
 }

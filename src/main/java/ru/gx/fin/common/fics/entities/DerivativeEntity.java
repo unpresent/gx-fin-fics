@@ -27,12 +27,12 @@ public class DerivativeEntity extends AbstractInstrumentEntity {
      */
     @ManyToOne(fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SELECT)
-    @JoinColumn(name = "BaseInstrument_Id", nullable = true)
+    @JoinColumn(name = "BaseInstrument_Id")
     private AbstractInstrumentEntity baseInstrument;
 
     /**
      * Дата экспирации.
      */
-    @Column(name = "ExpireDate", nullable = true)
+    @Column(name = "ExpireDate")
     private LocalDate expireDate;
 }
