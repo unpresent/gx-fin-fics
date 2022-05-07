@@ -1,13 +1,17 @@
 package ru.gx.fin.common.fics.converters;
 
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.stereotype.Component;
 import ru.gx.core.data.NotAllowedObjectUpdateException;
 import ru.gx.core.data.edlinking.AbstractDtoFromEntityConverter;
 import ru.gx.fin.common.fics.entities.CurrencyEntity;
 import ru.gx.fin.common.fics.out.Currency;
 
+@RequiredArgsConstructor
+@Component
 public class CurrencyDtoFromEntityConverter extends AbstractDtoFromEntityConverter<Currency, CurrencyEntity> {
     @Override
     @Nullable

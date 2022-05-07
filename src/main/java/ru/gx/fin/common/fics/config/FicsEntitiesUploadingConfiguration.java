@@ -1,8 +1,11 @@
 package ru.gx.fin.common.fics.config;
 
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import ru.gx.core.data.edlinking.AbstractEntitiesUploadingConfiguration;
 import ru.gx.core.data.edlinking.EntitiesDtoLinksConfigurationException;
 import ru.gx.fin.common.fics.converters.CurrencyDtoFromEntityConverter;
@@ -26,43 +29,45 @@ import javax.annotation.PostConstruct;
 
 import static lombok.AccessLevel.PROTECTED;
 
+@RequiredArgsConstructor
+@Configuration
 public class FicsEntitiesUploadingConfiguration extends AbstractEntitiesUploadingConfiguration {
     // -----------------------------------------------------------------------------------------------------------------
     // <editor-fold desc="Fields">
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
+    @NotNull
     private FicsSnapshotCurrencyDataPublishChannelApiV1 currencyDataPublishChannelApiV1;
 
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
+    @NotNull
     private FicsSnapshotSecurityDataPublishChannelApiV1 securityDataPublishChannelApiV1;
 
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
+    @NotNull
     private FicsSnapshotDerivativeDataPublishChannelApiV1 derivativeDataPublishChannelApiV1;
 
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
+    @NotNull
     private CurrencyKeyExtractor currencyKeyExtractor;
 
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
+    @NotNull
     private SecurityKeyExtractor securityKeyExtractor;
 
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
+    @NotNull
     private DerivativeKeyExtractor derivativeKeyExtractor;
 
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
+    @NotNull
     private CurrencyDtoFromEntityConverter currencyDtoFromEntityConverter;
 
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
+    @NotNull
     private SecurityDtoFromEntityConverter securityDtoFromEntityConverter;
 
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
+    @NotNull
     private DerivativeDtoFromEntityConverter derivativeDtoFromEntityConverter;
 
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
+    @NotNull
     private CurrenciesRepository currenciesRepository;
 
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
+    @NotNull
     private SecuritiesRepository securitiesRepository;
 
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
+    @NotNull
     private DerivativesRepository derivativesRepository;
 
     // </editor-fold>

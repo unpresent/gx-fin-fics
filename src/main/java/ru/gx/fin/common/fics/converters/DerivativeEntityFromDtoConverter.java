@@ -1,11 +1,13 @@
 package ru.gx.fin.common.fics.converters;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import ru.gx.core.data.edlinking.AbstractEntityFromDtoConverter;
 import ru.gx.fin.common.fics.entities.AbstractInstrumentEntity;
@@ -17,31 +19,31 @@ import java.util.UUID;
 
 import static lombok.AccessLevel.PROTECTED;
 
+@RequiredArgsConstructor
+@Component
 public class DerivativeEntityFromDtoConverter extends AbstractEntityFromDtoConverter<DerivativeEntity, Derivative> {
     @Getter(PROTECTED)
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
-    private DerivativesRepository derivativesRepository;
-
-    @Getter(PROTECTED)
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
-    private CurrenciesRepository currenciesRepository;
-
-    @Getter(PROTECTED)
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
-    private SecuritiesRepository securitiesRepository;
-
-    @Getter(PROTECTED)
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
     @NotNull
-    private InstrumentTypesRepository instrumentTypesRepository;
+    private final DerivativesRepository derivativesRepository;
 
     @Getter(PROTECTED)
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
     @NotNull
-    private ProvidersRepository providersRepository;
+    private final CurrenciesRepository currenciesRepository;
+
+    @Getter(PROTECTED)
+    @NotNull
+    private final SecuritiesRepository securitiesRepository;
+
+    @Getter(PROTECTED)
+    @NotNull
+    private final InstrumentTypesRepository instrumentTypesRepository;
+
+    @Getter(PROTECTED)
+    @NotNull
+    private final ProvidersRepository providersRepository;
 
     @Override
-    public @Nullable DerivativeEntity findDtoBySource(@Nullable Derivative source) {
+    public @Nullable DerivativeEntity findEntityBySource(@Nullable Derivative source) {
         if (source == null) {
             return null;
         }
@@ -49,7 +51,7 @@ public class DerivativeEntityFromDtoConverter extends AbstractEntityFromDtoConve
     }
 
     @Override
-    public @NotNull DerivativeEntity createDtoBySource(@NotNull Derivative source) {
+    public @NotNull DerivativeEntity createEntityBySource(@NotNull Derivative source) {
         final var result = new DerivativeEntity();
         updateDtoBySource(result, source);
         return result;

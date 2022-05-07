@@ -1,11 +1,13 @@
 package ru.gx.fin.common.fics.converters;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.gx.core.data.edlinking.AbstractEntityFromDtoConverter;
 import ru.gx.fin.common.fics.entities.SecurityEntity;
 import ru.gx.fin.common.fics.repository.InstrumentTypesRepository;
@@ -15,23 +17,23 @@ import ru.gx.fin.common.fics.out.Security;
 
 import static lombok.AccessLevel.PROTECTED;
 
+@RequiredArgsConstructor
+@Component
 public class SecurityEntityFromDtoConverter extends AbstractEntityFromDtoConverter<SecurityEntity, Security> {
     @Getter(PROTECTED)
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
-    private SecuritiesRepository securitiesRepository;
+    @NotNull
+    private final SecuritiesRepository securitiesRepository;
 
     @Getter(PROTECTED)
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
     @NotNull
-    private InstrumentTypesRepository instrumentTypesRepository;
+    private final InstrumentTypesRepository instrumentTypesRepository;
 
     @Getter(PROTECTED)
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
     @NotNull
-    private ProvidersRepository providersRepository;
+    private final ProvidersRepository providersRepository;
 
     @Override
-    public @Nullable SecurityEntity findDtoBySource(@Nullable Security source) {
+    public @Nullable SecurityEntity findEntityBySource(@Nullable Security source) {
         if (source == null) {
             return null;
         }
@@ -39,7 +41,7 @@ public class SecurityEntityFromDtoConverter extends AbstractEntityFromDtoConvert
     }
 
     @Override
-    public @NotNull SecurityEntity createDtoBySource(@NotNull Security source) {
+    public @NotNull SecurityEntity createEntityBySource(@NotNull Security source) {
         final var result = new SecurityEntity();
         updateDtoBySource(result, source);
         return result;

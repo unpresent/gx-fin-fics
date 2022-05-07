@@ -1,11 +1,13 @@
 package ru.gx.fin.common.fics.converters;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.gx.core.data.edlinking.AbstractEntityFromDtoConverter;
 import ru.gx.fin.common.fics.entities.CurrencyEntity;
 import ru.gx.fin.common.fics.out.Currency;
@@ -15,21 +17,20 @@ import ru.gx.fin.common.fics.repository.ProvidersRepository;
 
 import static lombok.AccessLevel.PROTECTED;
 
+@RequiredArgsConstructor
+@Component
 public class CurrencyEntityFromDtoConverter extends AbstractEntityFromDtoConverter<CurrencyEntity, Currency> {
     @Getter(PROTECTED)
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
     @NotNull
-    private CurrenciesRepository currenciesRepository;
+    private final CurrenciesRepository currenciesRepository;
 
     @Getter(PROTECTED)
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
     @NotNull
-    private InstrumentTypesRepository instrumentTypesRepository;
+    private final InstrumentTypesRepository instrumentTypesRepository;
 
     @Getter(PROTECTED)
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
     @NotNull
-    private ProvidersRepository providersRepository;
+    private final ProvidersRepository providersRepository;
 
     @SuppressWarnings("unused")
     @Nullable
@@ -41,7 +42,7 @@ public class CurrencyEntityFromDtoConverter extends AbstractEntityFromDtoConvert
     }
 
     @Override
-    public @Nullable CurrencyEntity findDtoBySource(@Nullable Currency source) {
+    public @Nullable CurrencyEntity findEntityBySource(@Nullable Currency source) {
         if (source == null) {
             return null;
         }
@@ -49,7 +50,7 @@ public class CurrencyEntityFromDtoConverter extends AbstractEntityFromDtoConvert
     }
 
     @Override
-    public @NotNull CurrencyEntity createDtoBySource(@NotNull Currency source) {
+    public @NotNull CurrencyEntity createEntityBySource(@NotNull Currency source) {
         final var result = new CurrencyEntity();
         updateDtoBySource(result, source);
         return result;

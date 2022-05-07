@@ -2,19 +2,18 @@ package ru.gx.fin.common.fics.datacontroller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.SessionFactory;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Component;
 import ru.gx.core.channels.ChannelApiDescriptor;
 import ru.gx.core.channels.ChannelConfigurationException;
-import ru.gx.core.data.ActiveSessionsContainer;
 import ru.gx.core.data.DataObject;
 import ru.gx.core.data.edlinking.EntitiesDtoLinksConfigurationException;
 import ru.gx.core.data.edlinking.EntityUploadingDescriptor;
 import ru.gx.core.data.entity.EntityObject;
+import ru.gx.core.data.sqlwrapping.ThreadConnectionsWrapper;
 import ru.gx.core.messaging.Message;
 import ru.gx.core.messaging.MessageBody;
 import ru.gx.core.messaging.MessageHeader;
@@ -34,50 +33,42 @@ import java.util.ArrayList;
 import static lombok.AccessLevel.PROTECTED;
 
 @Slf4j
+@RequiredArgsConstructor
+@Component
 public class DataController {
     // -----------------------------------------------------------------------------------------------------------------
     // <editor-fold desc="Fields">
     @Getter(PROTECTED)
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
-    private ObjectMapper objectMapper;
+    @NotNull
+    private final ObjectMapper objectMapper;
 
     @Getter(PROTECTED)
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
-    private DataSource dataSource;
+    @NotNull
+    private final DataSource dataSource;
 
     @Getter(PROTECTED)
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
-    private SimpleWorker simpleWorker;
+    @NotNull
+    private final SimpleWorker simpleWorker;
 
     @Getter(PROTECTED)
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
-    private FicsEntitiesUploadingConfiguration entitiesUploadingConfiguration;
+    @NotNull
+    private final FicsEntitiesUploadingConfiguration entitiesUploadingConfiguration;
 
     @Getter(PROTECTED)
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
-    private EntityManagerFactory entityManagerFactory;
+    @NotNull
+    private final EntityManagerFactory entityManagerFactory;
 
     @Getter(PROTECTED)
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
-    private ActiveSessionsContainer activeSessionsContainer;
-
-    private SessionFactory sessionFactory;
+    @NotNull
+    private ThreadConnectionsWrapper threadConnectionsWrapper;
 
     @Getter(PROTECTED)
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
-    private RedisOutcomeCollectionsUploader redisUploader;
+    @NotNull
+    private final RedisOutcomeCollectionsUploader redisUploader;
 
     @Getter(PROTECTED)
-    @Setter(value = PROTECTED, onMethod_ = @Autowired)
-    private RedisOutcomeCollectionsConfiguration redisOutcomeTopicsConfiguration;
-    // </editor-fold>
-    // -----------------------------------------------------------------------------------------------------------------
-    // <editor-fold desc="Initialization">
-
-    public DataController() {
-        super();
-    }
-
+    @NotNull
+    private final RedisOutcomeCollectionsConfiguration redisOutcomeTopicsConfiguration;
     // </editor-fold>
     // -----------------------------------------------------------------------------------------------------------------
     // <editor-fold desc="Обработка событий Worker-а">
@@ -92,18 +83,10 @@ public class DataController {
     public void startingExecute(SimpleWorkerOnStartingExecuteEvent event) throws Exception {
         log.debug("Starting startingExecute()");
 
-        if (this.sessionFactory == null) {
-            if (entityManagerFactory.unwrap(SessionFactory.class) == null) {
-                throw new NullPointerException("entityManagerFactory is not a hibernate factory!");
-            }
-            this.sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
-        }
-
         // Публикация собственных данных
         publishAllOnStart();
 
         log.debug("Finished startingExecute()");
-
     }
 
     /**
@@ -130,22 +113,7 @@ public class DataController {
             this.simpleWorker.runnerIsLifeSet();
             event.setImmediateRunNextIteration(false);
 
-            final var session = this.sessionFactory.openSession();
-            try (session) {
-                this.activeSessionsContainer.putCurrent(session);
-                final var tran = session.beginTransaction();
-
-                try {
-
-
-                    tran.commit();
-                } catch (Exception e) {
-                    tran.rollback();
-                    internalTreatmentExceptionOnDataRead(event, e);
-                }
-            } finally {
-                this.activeSessionsContainer.putCurrent(null);
-            }
+            // TODO: body
 
         } catch (Exception e) {
             internalTreatmentExceptionOnDataRead(event, e);
@@ -177,18 +145,26 @@ public class DataController {
     @SuppressWarnings("unchecked")
     protected void publishAllOnStart() throws Exception {
         for(final var descriptor : this.entitiesUploadingConfiguration.getAll()) {
-            this.publishSnapshot((EntityUploadingDescriptor<ChannelApiDescriptor<Message<?,?>>, EntityObject, DataObject>) descriptor);
+            this.publishSnapshot(
+                    (EntityUploadingDescriptor
+                            <ChannelApiDescriptor<Message<?,?>>, EntityObject, DataObject>) descriptor
+            );
         }
     }
 
     @NotNull
-    private RedisOutcomeCollectionUploadingDescriptor<? extends Message<? extends MessageHeader, ? extends MessageBody>> getRedisOutcomeDescriptorByChannelApi(@NotNull final ChannelApiDescriptor<?> channelApiDescriptor) {
+    private
+    RedisOutcomeCollectionUploadingDescriptor<? extends Message<? extends MessageHeader, ? extends MessageBody>>
+    getRedisOutcomeDescriptorByChannelApi(@NotNull final ChannelApiDescriptor<?> channelApiDescriptor) {
         for (final var descriptor : this.redisOutcomeTopicsConfiguration.getAll()) {
             if (descriptor.getApi() == channelApiDescriptor) {
-                return (RedisOutcomeCollectionUploadingDescriptor<? extends Message<? extends MessageHeader, ? extends MessageBody>>) descriptor;
+                return (
+                        RedisOutcomeCollectionUploadingDescriptor
+                                <? extends Message<? extends MessageHeader, ? extends MessageBody>>) descriptor;
             }
         }
-        throw new ChannelConfigurationException("There isn't RedisOutcomeCollectionUploadingDescriptor for api: " + channelApiDescriptor.getName());
+        throw new ChannelConfigurationException("There isn't RedisOutcomeCollectionUploadingDescriptor for api: "
+                + channelApiDescriptor.getName());
     }
 
     public <M extends Message<? extends MessageHeader, ? extends MessageBody>,
@@ -198,17 +174,20 @@ public class DataController {
 
         final var repository = entityUploadingDescriptor.getRepository();
         if (repository == null) {
-            throw new EntitiesDtoLinksConfigurationException("Can't get CrudRepository by ChannelApi " + entityUploadingDescriptor.getChannelApiDescriptor().getName());
+            throw new EntitiesDtoLinksConfigurationException("Can't get CrudRepository by ChannelApi "
+                    + entityUploadingDescriptor.getChannelApiDescriptor().getName());
         }
 
         final var converter = entityUploadingDescriptor.getDtoFromEntityConverter();
         if (converter == null) {
-            throw new EntitiesDtoLinksConfigurationException("Can't get Converter by ChannelApi " + entityUploadingDescriptor.getChannelApiDescriptor().getName());
+            throw new EntitiesDtoLinksConfigurationException("Can't get Converter by ChannelApi "
+                    + entityUploadingDescriptor.getChannelApiDescriptor().getName());
         }
 
         final var keyExtractor = entityUploadingDescriptor.getKeyExtractor();
         if (keyExtractor == null) {
-            throw new EntitiesDtoLinksConfigurationException("Can't get KeyExtractor by ChannelApi " + entityUploadingDescriptor.getChannelApiDescriptor().getName());
+            throw new EntitiesDtoLinksConfigurationException("Can't get KeyExtractor by ChannelApi "
+                    + entityUploadingDescriptor.getChannelApiDescriptor().getName());
         }
 
         // Загружаем данные из БД:
@@ -219,7 +198,8 @@ public class DataController {
         converter.fillDtoCollectionFromSource(dataObjects, entityObjects);
 
         // Выгружаем данные
-        final var redisDescriptor = this.getRedisOutcomeDescriptorByChannelApi(entityUploadingDescriptor.getChannelApiDescriptor());
+        final var redisDescriptor =
+                getRedisOutcomeDescriptorByChannelApi(entityUploadingDescriptor.getChannelApiDescriptor());
         this.redisUploader.uploadDataObjects(redisDescriptor, dataObjects, keyExtractor);
     }
     // </editor-fold>

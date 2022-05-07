@@ -1,0 +1,28 @@
+#  docker-compose up -d
+version: '3.7'
+networks:
+  bridge-net:
+    driver: bridge
+    name: bridge-net
+
+services:
+  gx-fin-fics:
+    container_name: gx-fin-fics
+    image: gx-fin-fics
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    networks:
+      - bridge-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "7002:7002"
+    environment:
+      KAFKA_SERVER: host.docker.internal:9092
+      REDIS_SERVER: host.docker.internal
+      REDIS_PORT: 6379
+      DATASOURCE_URL: "jdbc:postgresql://host.docker.internal:5432/gxfin_fics"
+      DATASOURCE_USER: gxfin_fics
+      DATASOURCE_PASS: 12033021
